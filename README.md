@@ -16,6 +16,7 @@ This app is recreated from Corey Shafer tut (https://www.youtube.com/watch?v=MwZ
 * HTML
 * CSS
 * JS
+* SQL Alchemy
 * Linux
 * Linode (server provider)
 

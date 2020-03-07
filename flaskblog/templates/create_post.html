@@ -1,0 +1,40 @@
+{% extends "layout.html" %} <!-- code to inherit from layout.html-->
+{% block content %} <!-- code to replace block section from layout.html-->
+    <div class="content-section">
+        <form method="POST" action=""> <!-- empty string in action means that we post this form to the same rout that we are currently in-->
+            {{ form.hidden_tag() }} <!-- accessing variable - need to use curly braces, hidden_tag method adds CSRF token (stands for cross-site request forgery), security reasons -->
+            <fieldset class="form-group">  <!-- bootstrap class-->
+                <legend class="border-bottom mb-4">{{ legend }}</legend> <!-- bootstrap class-->
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}<!-- bootstrap class-->
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}<!-- bootstrap class-->
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label") }}
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid") }}<!-- bootstrap class-->
+                        <div class="invalid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.content(class="form-control form-control-lg") }}<!-- bootstrap class-->
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}  <!-- word content is not necessary, but it is more readable-->

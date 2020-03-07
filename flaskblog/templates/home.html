@@ -1,0 +1,27 @@
+{% extends "layout.html" %} <!-- code to inherit from layout.html-->
+{% block content %} <!-- code to replace block section from layout.html-->
+    {% for post in posts.items %}  <!-- jinja2 engine allows to put actual code in html, posts is now pagination object so we need use .items-->
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"> <!-- first class is bootstrap, second is from main.css -->
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a> <!-- username added to display only name of user, not entire User object -->
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small> <!-- str added to distlay only year, month and day -->
+            </div>
+            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} <!-- rendering number of page that user can choose, arguments for set how many pages will be to choose, right current =2 because it includes current page-->
+        {% if page_num %} <!-- rendering number of page that user can choose-->
+            {% if posts.page == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+<!-- What is that else for-->
+        {% endif %}
+    {% endfor %}
+{% endblock content %}  <!-- word content is not necessary, but it is more readable-->

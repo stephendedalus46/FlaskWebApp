@@ -1,0 +1,52 @@
+{% extends "layout.html" %} <!-- code to inherit from layout.html-->
+{% block content %} <!-- code to replace block section from layout.html-->
+    <div class="content-section">
+        <form method="POST" action=""> <!-- empty string in action means that we post this form to the same rout that we are currently in-->
+            {{ form.hidden_tag() }} <!-- accessing variable - need to use curly braces, hidden_tag method adds CSRF token (stands for cross-site request forgery), security reasons -->
+            <fieldset class="form-group">  <!-- bootstrap class-->
+                <legend class="border-bottom mb-4">Log In</legend> <!-- bootstrap class-->
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}<!-- bootstrap class-->
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}<!-- bootstrap class-->
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}<!-- bootstrap class-->
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}<!-- bootstrap class-->
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.remember(class="form-check-input") }}
+                    {{ form.remember.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
+                </small>
+            </div>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a><!-- login is name of route function not rout itself-->
+        </small>
+    </div>
+{% endblock content %}  <!-- word content is not necessary, but it is more readable-->
